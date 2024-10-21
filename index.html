@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GOOBIE WOOBIE</title>
-  <audio src="bwuh.mp3" autoplay loop volume="0.1"></audio>
+  <title>␄</title>
+  <audio src="bwuh.mp3" autoplay="yes" loop="'yes" volume="0.1"></audio>
 <style>
   body, html {
     margin: 0;
@@ -88,11 +88,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const cursorFollower = document.getElementById('cursor-follower');
   
   const messages = [
-    "We're not a cult, but... ",
-    "Prolonged exposure may lead to spontaneous donations",
-    " Breaking news: our website is not boring",
-    "Your browsing habits are so predictable 🤔",
-    "👀 We know you're trying to avoid doing actual work 📊"
+    "🤑 We're not a cult, but we do accept donations 🤑",
+    "💰 Prolonged exposure may lead to spontaneous donations 💰",
+    "🗞️ Breaking news: Donating will relieve existential dread 📰",
+    "🕸️ Your browsing habits are so predictable 🤔",
+    "👀 We know you're trying to avoid doing actual work 📊",
+    "💸 We see you're still on our website 🤔",
+    "🤝 You're still using the same password 🤦‍♂️",
+    "📈 We've tracked your browsing habits 📊",
+    "💸 Help us fuel your online shopping habit 🛍️",
+    "💸 Donate now and help us fund more distractions 📺",
+    "📊 Your online security is lacking, fix it 🔒",
+    "📊 We know you're a fan of procrastination, own it 📺",
+    "📊 We know you're a master of doing nothing, impressive 🤩",
+    "📊 We know you're a fan of distractions, we are too 📺",
+    "📊 Your browser bookmarks are a mess, organize them 📁",
+    "📊 We know you're a fan of online shopping, donate now 🛍️",
+    "🤝 You're still reading this, kudos to your attention span 📖",
+    "💸 Your lack of productivity is impressive, keep it up 📊",
+    "🤔 Your browser history is a treasure trove of memes 🤣"
   ];
 
   let currentMessageIndex = 0;
@@ -106,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
   }
 
-  // Change message every 5 seconds
-  setInterval(changeMessage, 5000);
+  // Change message every 2.5 seconds
+  setInterval(changeMessage, 2500);
 
   // Three.js scene setup
   const scene = new THREE.Scene();
