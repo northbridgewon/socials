@@ -1,0 +1,187 @@
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOOBIE WOOBIE</title>
+  <audio src="bwuh.mp3" autoplay volume="0.5"></audio>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #0a0a0a;
+    color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+  }
+  #container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  #message {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 10;
+    min-height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #social-links {
+    display: flex;
+    gap: 20px;
+    z-index: 10;
+  }
+  .social-link {
+    font-size: 2em;
+    color: #f0f0f0;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+  .social-link:hover {
+    color: #00ffff;
+  }
+  #cursor-follower {
+    position: absolute;
+    pointer-events: none;
+    z-index: 20;
+  }
+  #particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<div id="container">
+  <div id="message"><b>You look easy to microwave...</b></div>
+  <div id="social-links">
+    <a href="https://cash.app/$northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">💸</a>
+    <a href="https://github.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">🧑🏼‍💻</a>
+    <a href="https://twitter.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">🐦</a>
+    <a href="https://www.youtube.com/@northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">📺</a>
+    <a href="https://instagram.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">📷</a>
+    <a href="mailto:cortex@hatov.enterprises" class="social-link" target="_blank" rel="noopener noreferrer">📨</a>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('container');
+  const messageElement = document.getElementById('message');
+  const cursorFollower = document.getElementById('cursor-follower');
+  
+  const messages = [
+    "We're not a cult, but... ",
+    "Prolonged exposure may lead to spontaneous donations",
+    " Breaking news: our website is not boring",
+    "Your browsing habits are so predictable 🤔",
+    "👀 We know you're trying to avoid doing actual work 📊"
+  ];
+
+  let currentMessageIndex = 0;
+
+  function changeMessage() {
+    messageElement.style.opacity = 0;
+    setTimeout(() => {
+      currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+      messageElement.textContent = messages[currentMessageIndex];
+      messageElement.style.opacity = 1;
+    }, 500);
+  }
+
+  // Change message every 5 seconds
+  setInterval(changeMessage, 5000);
+
+  // Three.js scene setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById('particles').appendChild(renderer.domElement);
+
+  // Create particles
+  const particlesGeometry = new THREE.BufferGeometry();
+  const particleCount = 1000;
+
+  const positions = new Float32Array(particleCount * 5);
+  const colors = new Float32Array(particleCount * 5);
+
+  for (let i = 0; i < particleCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 10;
+    colors[i] = Math.random();
+  }
+
+  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.05,
+    vertexColors: true,
+    blending: THREE.AdditiveBlending,
+    transparent: true
+  });
+
+  const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+  scene.add(particlesMesh);
+
+  camera.position.z = 5;
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    particlesMesh.rotation.x += 0.005;
+    particlesMesh.rotation.y += 0.005;
+
+    const positions = particlesGeometry.attributes.position.array;
+    const colors = particlesGeometry.attributes.color.array;
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+
+      // Update position
+      positions[i3 + 1] += 0.01;
+      if (positions[i3 + 1] > 5) {
+        positions[i3 + 1] = -5;
+      }
+
+      // Update color
+      colors[i3] = (Math.sin(Date.now() * 0.001 + i) + 1) / 2;
+      colors[i3 + 1] = (Math.sin(Date.now() * 0.002 + i) + 1) / 2;
+      colors[i3 + 2] = (Math.sin(Date.now() * 0.003 + i) + 1) / 2;
+    }
+
+    particlesGeometry.attributes.position.needsUpdate = true;
+    particlesGeometry.attributes.color.needsUpdate = true;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+});
+</script>
+</body></html>
