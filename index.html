@@ -4,8 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>␄</title>
-  <audio src="bwuh.mp3" autoplay="yes" loop="'yes" volume="0.1"></audio>
+  <meta http-equiv="refresh" content="256; url=https://yehoshuahamashiach.faith/"/>
+  <meta
+      name="description"
+      content="YOU LOOK EASY TO MICROWAVE"/>
+  <meta name="robots" content="index, follow" />
+  <title>␆</title>
 <style>
   body, html {
     margin: 0;
@@ -132,13 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Create particles
   const particlesGeometry = new THREE.BufferGeometry();
-  const particleCount = 1000;
+  const particleCount = 4096;
 
-  const positions = new Float32Array(particleCount * 5);
+  const positions = new Float32Array(particleCount * 7);
   const colors = new Float32Array(particleCount * 5);
 
   for (let i = 0; i < particleCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 10;
+    positions[i] = (Math.random() - 0.512) * 9;
     colors[i] = Math.random();
   }
 
@@ -146,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
   const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.05,
+    size: 0.0512,
     vertexColors: true,
     blending: THREE.AdditiveBlending,
     transparent: true
@@ -155,14 +159,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
 
-  camera.position.z = 5;
+  camera.position.z = 3;
 
   // Animation loop
   function animate() {
     requestAnimationFrame(animate);
 
-    particlesMesh.rotation.x += 0.005;
-    particlesMesh.rotation.y += 0.005;
+    particlesMesh.rotation.x += 0.00512;
+    particlesMesh.rotation.y += 0.00512;
 
     const positions = particlesGeometry.attributes.position.array;
     const colors = particlesGeometry.attributes.color.array;
@@ -171,15 +175,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const i3 = i * 3;
 
       // Update position
-      positions[i3 + 1] += 0.01;
-      if (positions[i3 + 1] > 5) {
-        positions[i3 + 1] = -5;
+      positions[i3 + 1] += 0.0111;
+      if (positions[i3 + 1] > 4) {
+        positions[i3 + 1] = -4;
       }
 
       // Update color
-      colors[i3] = (Math.sin(Date.now() * 0.001 + i) + 1) / 2;
-      colors[i3 + 1] = (Math.sin(Date.now() * 0.002 + i) + 1) / 2;
-      colors[i3 + 2] = (Math.sin(Date.now() * 0.003 + i) + 1) / 2;
+      colors[i3] = (Math.sin(Date.now() * 0.00123 + i) + 1) / 2;
+      colors[i3 + 1] = (Math.sin(Date.now() * 0.00246 + i) + 1) / 2;
+      colors[i3 + 2] = (Math.sin(Date.now() * 0.00321 + i) + 1) / 2;
     }
 
     particlesGeometry.attributes.position.needsUpdate = true;
