@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mykchaihayin's Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>PIACIERE, BUONGIORNO AMICI</h1>
+        <p>Click the button below to see some magic happen:</p>
+        <button id="magicButton">Do Magic</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        document.getElementById('magicButton').addEventListener('click', function() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<p>✨ Whoosh! Magic happened! ✨</p>';
+            output.style.color = getRandomColor();
+            
+            // Create floating emojis
+            for (let i = 0; i < 21; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.innerHTML = ['🇨🇦', '🇬🇧', '🇺🇸', '🇻🇦', '🇮🇹', '🇮🇱'][Math.floor(Math.random() * 6)];
+                    emoji.style.position = 'absolute';
+                    emoji.style.left = Math.random() * window.innerWidth + 'px';
+                    emoji.style.top = Math.random() * window.innerHeight + 'px';
+                    emoji.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    emoji.style.animation = `float ${Math.random() * 3 + 2}s linear`;
+                    document.body.appendChild(emoji);
+                    
+                    // Remove emoji after animation
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 5000);
+                }, i * 200);
+            }
+        });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</body>
+</html>
