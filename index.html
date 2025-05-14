@@ -130,14 +130,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Three.js scene setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('particles').appendChild(renderer.domElement);
 
   // Create particles
   const particlesGeometry = new THREE.BufferGeometry();
-  const particleCount = 4096;
+  const particleCount = 1024;
 
   const positions = new Float32Array(particleCount * 7);
   const colors = new Float32Array(particleCount * 5);
