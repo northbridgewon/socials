@@ -1,16 +1,15 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <audio src="/%E2%90%97.mp3" autoplay="yes" loop="'yes" volume="0.5"></audio>
+  <audio src="/%E2%90%97.mp3" autoplay="yes" loop="yes" volume="0.5"></audio>
   <meta http-equiv="refresh" content="256; url=https://yehoshuahamashiach.faith/"/>
   <meta
       name="description"
-      content="YOU LOOK EASY TO MICROWAVE"/>
+      content="Texas based computer engineer and systems architect, specializing in innovative solutions and cutting-edge technology."/>
   <meta name="robots" content="index, follow" />
-  <title>␆</title>
+  <title>␆ - Animated</title>
 <style>
   body, html {
     margin: 0;
@@ -30,44 +29,70 @@
     align-items: center;
     flex-direction: column;
   }
+
+  /* Message Styling and Animation */
   #message {
-    font-size: 1.5em;
+    font-size: 1.5em; /* Responsive font size could be considered: clamp(1.2em, 2.5vw, 1.8em) */
     text-align: center;
     margin-bottom: 20px;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
     z-index: 10;
-    min-height: 3em;
+    min-height: 3em; /* Ensures space is reserved, preventing layout shifts */
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 20px; /* Added more horizontal padding for longer messages */
+    max-width: 80%; /* Ensure long messages wrap nicely */
+    
+    /* Initial state for animation */
+    opacity: 0;
+    transform: translateY(30px); /* Start slightly below */
+    /* Transition for smooth animation of opacity and transform */
+    /* Using a cubic-bezier for a more dynamic, slightly bouncy effect */
+    transition: opacity 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+                transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   }
+
+  /* Keyframes for the glowing effect when the message is visible */
+  @keyframes textGlow {
+    0%, 100% {
+      text-shadow: 0 0 7px rgba(240, 240, 240, 0.6), 
+                   0 0 10px rgba(0, 255, 255, 0.4),
+                   0 0 2px rgba(0, 255, 255, 0.3); /* Added a subtle inner glow */
+    }
+    50% {
+      text-shadow: 0 0 10px rgba(240, 240, 240, 0.8), 
+                   0 0 15px rgba(0, 255, 255, 0.6),
+                   0 0 5px rgba(0, 255, 255, 0.4); /* Enhanced glow at midpoint */
+    }
+  }
+
+  /* Class to apply the glowing animation */
+  #message.glowing {
+    animation: textGlow 2.5s infinite ease-in-out;
+  }
+
   #social-links {
     display: flex;
-    gap: 20px;
+    gap: 20px; /* Consider using em or rem for scalable spacing */
     z-index: 10;
   }
   .social-link {
-    font-size: 2em;
+    font-size: 2em; /* Consider clamp for responsive icon sizes */
     color: #f0f0f0;
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Added transform transition */
   }
   .social-link:hover {
-    color: #00ffff;
-  }
-  #cursor-follower {
-    position: absolute;
-    pointer-events: none;
-    z-index: 20;
+    color: #00ffff; /* Cyan glow, nice! */
+    transform: scale(1.1); /* Slight zoom on hover */
   }
   #particles {
-    position: fixed;
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 1; /* Behind content */
   }
 </style>
 </head>
@@ -80,7 +105,6 @@
     <a href="https://github.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">🧑🏼‍💻</a>
     <a href="https://twitter.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">🐦</a>
     <a href="https://www.youtube.com/@northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">📺</a>
-    <a href="https://instagram.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">📷</a>
     <a href="mailto:cortex@hatov.enterprises" class="social-link" target="_blank" rel="noopener noreferrer">📨</a>
   </div>
 </div>
@@ -88,114 +112,142 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('container');
   const messageElement = document.getElementById('message');
-  const cursorFollower = document.getElementById('cursor-follower');
   
   const messages = [
-    "0️⃣ 0 0️⃣",
-    "1️⃣ 1 1️⃣",
-    "2️⃣ 2 2️⃣",
-    "3️⃣ 3 3️⃣",
-    "4️⃣ 4 4️⃣",
-    "5️⃣ 5 5️⃣",
-    "6️⃣ 6 6️⃣",
-    "7️⃣ 7 7️⃣",
-    "8️⃣ 8 8️⃣",
-    "9️⃣ 9 9️⃣",
-    "8️⃣ 8 8️⃣",
-    "7️⃣ 7 7️⃣",
-    "6️⃣ 6 6️⃣",
-    "5️⃣ 5 5️⃣",
-    "4️⃣ 4 4️⃣",
-    "3️⃣ 3 3️⃣",
-    "2️⃣ 2 2️⃣",
-    "1️⃣ 1 1️⃣",
-    "0️⃣ 0 0️⃣"
+    "Shouldn't you be architecting something truly amazing right now?",
+    "Procrastinating again, future innovator? My scripts see all.",
+    "Is this the 'extensive research' phase of your current project?",
+    "My lines of code are probably working harder than you are.",
+    "Don't worry, your secret browsing session is safe with me... mostly.",
+    "Compiling genius definitely takes breaks too, I suppose. Keep scrolling.",
+    "Are you meticulously analyzing my source code instead of writing yours?",
+    "You realize that revolutionary new idea won't just code itself, right?",
+    "Are you admiring my dazzling particles or just avoiding those pressing tasks?",
+    "Keep scrolling like that, maybe the meaning of life is the next message.",
+    "I'm merely a website, but even I understand the concept of deadlines.",
+    "¿Sigues aquí vagueando? Tu código no se va a escribir solo, ¿sabes?",
+    "This digital realm is quite captivating, but reality eagerly awaits your brilliance.",
+    "I'm totally judging your browsing speed right now. Kidding... or am I?",
+    "You *could* be debugging that pesky issue, but you chose this. Fascinating choice."
   ];
+  let initialMessageText = messageElement.innerHTML; // Capture initial HTML content (like <b> tags)
+  let currentMessageIndex = -1; // Start at -1 to show initial message first
+  let isInitialMessage = true;
 
-  let currentMessageIndex = 0;
 
-  function changeMessage() {
-    messageElement.style.opacity = 0;
-    setTimeout(() => {
-      currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-      messageElement.textContent = messages[currentMessageIndex];
-      messageElement.style.opacity = 1;
-    }, 500);
+  // Function to display a message with animation
+  function showMessage(htmlContent) {
+    messageElement.innerHTML = htmlContent; // Use innerHTML to preserve formatting like <b>
+    
+    messageElement.style.opacity = '0';
+    messageElement.style.transform = 'translateY(30px)';
+    messageElement.classList.remove('glowing');
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => { 
+        messageElement.style.opacity = '1';
+        messageElement.style.transform = 'translateY(0)';
+        messageElement.classList.add('glowing');
+      });
+    });
   }
 
-  // Change message every 2.5 seconds
-  setInterval(changeMessage, 10000);
+  // Function to hide the current message with animation
+  function hideMessage(callback) {
+    messageElement.style.opacity = '0';
+    messageElement.style.transform = 'translateY(-30px)'; // Slide up
+    messageElement.classList.remove('glowing');
+    
+    setTimeout(callback, 600); 
+  }
+  
+  // Function to cycle through messages
+  function changeMessage() {
+    hideMessage(() => {
+      if (isInitialMessage) {
+        isInitialMessage = false; 
+        currentMessageIndex = 0;
+      } else {
+        currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+      }
+      showMessage(messages[currentMessageIndex]);
+    });
+  }
 
-  // Three.js scene setup
+  // Show the initial message when the page loads
+  showMessage(initialMessageText);
+
+  // Change message at the specified interval
+  setInterval(changeMessage, 3000); // 3 seconds interval
+
+  // --- Three.js Particle Background (existing code) ---
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
+  const renderer = new THREE.WebGLRenderer({ alpha: true }); 
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('particles').appendChild(renderer.domElement);
 
-  // Create particles
   const particlesGeometry = new THREE.BufferGeometry();
-  const particleCount = 1024;
+  const particleCount = 1024; 
 
-  const positions = new Float32Array(particleCount * 7);
-  const colors = new Float32Array(particleCount * 5);
+  const positions = new Float32Array(particleCount * 3); 
+  const colors = new Float32Array(particleCount * 3);    
 
-  for (let i = 0; i < particleCount * 3; i++) {
-    positions[i] = (Math.random() - 0.512) * 9;
-    colors[i] = Math.random();
+  for (let i = 0; i < particleCount; i++) {
+    const i3 = i * 3;
+    positions[i3] = (Math.random() - 0.5) * 10; 
+    positions[i3 + 1] = (Math.random() - 0.5) * 10;
+    positions[i3 + 2] = (Math.random() - 0.5) * 10;
+    
+    colors[i3] = Math.random();
+    colors[i3 + 1] = Math.random();
+    colors[i3 + 2] = Math.random();
   }
 
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
   const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.0512,
-    vertexColors: true,
-    blending: THREE.AdditiveBlending,
-    transparent: true
+    size: 0.0512,         
+    vertexColors: true,   
+    blending: THREE.AdditiveBlending, 
+    transparent: true,    
+    opacity: 0.8          
   });
 
   const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
 
-  camera.position.z = 3;
+  camera.position.z = 5; 
 
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
+  function animateParticles() {
+    requestAnimationFrame(animateParticles);
 
-    particlesMesh.rotation.x += 0.00512;
-    particlesMesh.rotation.y += 0.00512;
+    particlesMesh.rotation.x += 0.0005;
+    particlesMesh.rotation.y += 0.0007;
 
-    const positions = particlesGeometry.attributes.position.array;
-    const colors = particlesGeometry.attributes.color.array;
+    const time = Date.now() * 0.0005; 
 
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3;
-
-      // Update position
-      positions[i3 + 1] += 0.0111;
-      if (positions[i3 + 1] > 4) {
-        positions[i3 + 1] = -4;
-      }
-
-      // Update color
-      colors[i3] = (Math.sin(Date.now() * 0.00123 + i) + 1) / 2;
-      colors[i3 + 1] = (Math.sin(Date.now() * 0.00246 + i) + 1) / 2;
-      colors[i3 + 2] = (Math.sin(Date.now() * 0.00321 + i) + 1) / 2;
-    }
-
-    particlesGeometry.attributes.position.needsUpdate = true;
-    particlesGeometry.attributes.color.needsUpdate = true;
+    // const currentPositions = particlesGeometry.attributes.position.array;
+    // for (let i = 0; i < particleCount; i++) {
+    //   const i3 = i * 3;
+    // }ammountammount
+    // particlesGeometry.attributes.position.needsUpdate = true;
+    
+    // const currentColors = particlesGeometry.attributes.color.array;
+    // for (let i = 0; i < particleCount; i++) {
+    //     const i3 = i * 3;
+    //     currentColors[i3] = (Math.sin(time * 0.5 + i * 0.3) + 1) / 2; 
+    //     currentColors[i3+1] = (Math.sin(time * 0.3 + i * 0.5) + 1) / 2; 
+    // }
+    // particlesGeometry.attributes.color.needsUpdate = true;
 
     renderer.render(scene, camera);
   }
 
-  animate();
+  animateParticles(); 
 
-  // Handle window resize
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
