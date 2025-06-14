@@ -10,15 +10,23 @@
       content="Texas based computer engineer and systems architect, specializing in innovative solutions and cutting-edge technology."/>
   <meta name="robots" content="index, follow" />
   <title>␆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --glow-color: rgba(0, 255, 255, 0.7);
+    --text-color: #f0f0f0;
+    --bg-color: #0a0a0a;
+  }
   body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
-    background-color: #0a0a0a;
-    color: #f0f0f0;
-    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', 'Arial', sans-serif; /* Upgraded Font */
   }
   #container {
     position: relative;
@@ -28,86 +36,150 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    z-index: 10;
   }
 
-  /* Message Styling and Animation */
+  /* Message Styling */
   #message {
-    font-size: 1.5em; /* Responsive font size could be considered: clamp(1.2em, 2.5vw, 1.8em) */
+    font-size: clamp(1.2em, 2.5vw, 1.8em);
     text-align: center;
-    margin-bottom: 20px;
-    z-index: 10;
-    min-height: 3em; /* Ensures space is reserved, preventing layout shifts */
+    margin-bottom: 25px;
+    min-height: 3em; 
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px; /* Added more horizontal padding for longer messages */
-    max-width: 80%; /* Ensure long messages wrap nicely */
-    
-    /* Initial state for animation */
-    opacity: 0;
-    transform: translateY(30px); /* Start slightly below */
-    /* Transition for smooth animation of opacity and transform */
-    /* Using a cubic-bezier for a more dynamic, slightly bouncy effect */
-    transition: opacity 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
-                transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    padding: 10px 20px;
+    max-width: 80%;
+    opacity: 1; /* Typewriter will handle entry */
   }
 
-  /* Keyframes for the glowing effect when the message is visible */
+  /* Glowing Effect for Text */
   @keyframes textGlow {
     0%, 100% {
-      text-shadow: 0 0 7px rgba(240, 240, 240, 0.6), 
-                   0 0 10px rgba(0, 255, 255, 0.4),
-                   0 0 2px rgba(0, 255, 255, 0.3); /* Added a subtle inner glow */
+      text-shadow: 0 0 8px var(--text-color), 0 0 12px var(--glow-color);
     }
     50% {
-      text-shadow: 0 0 10px rgba(240, 240, 240, 0.8), 
-                   0 0 15px rgba(0, 255, 255, 0.6),
-                   0 0 5px rgba(0, 255, 255, 0.4); /* Enhanced glow at midpoint */
+      text-shadow: 0 0 12px var(--text-color), 0 0 20px var(--glow-color);
     }
   }
-
-  /* Class to apply the glowing animation */
-  #message.glowing {
+  .glowing {
     animation: textGlow 2.5s infinite ease-in-out;
   }
 
+  /* Social Links */
   #social-links {
     display: flex;
-    gap: 20px; /* Consider using em or rem for scalable spacing */
+    gap: 1.5rem; /* Using rem for scalability */
     z-index: 10;
   }
   .social-link {
-    font-size: 2em; /* Consider clamp for responsive icon sizes */
-    color: #f0f0f0;
+    font-size: clamp(1.8em, 4vw, 2.2em);
+    color: var(--text-color);
     text-decoration: none;
-    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Added transform transition */
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
   }
   .social-link:hover {
-    color: #00ffff; /* Cyan glow, nice! */
-    transform: scale(1.1); /* Slight zoom on hover */
+    color: var(--glow-color);
+    transform: scale(1.15) rotate(5deg); /* More dynamic hover */
   }
+
+  /* Particles Background */
   #particles {
     position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Behind content */
+    z-index: 1;
+  }
+
+  /* About Me Modal */
+  #about-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  #about-modal.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  #modal-content {
+    background: rgba(15, 15, 15, 0.8);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+    transform: scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  #about-modal.visible #modal-content {
+      transform: scale(1);
+  }
+  #modal-content h2 {
+    color: var(--glow-color);
+    margin-top: 0;
+    font-weight: 700;
+  }
+  #modal-content p {
+    line-height: 1.6;
+    font-size: 1.1em;
+  }
+  #close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8em;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  #close-modal:hover {
+    color: var(--glow-color);
+    transform: rotate(90deg);
   }
 </style>
 </head>
 <body>
+
 <div id="particles"></div>
+
 <div id="container">
-  <div id="message"><b>יברך אותך מאזאל טובּים</b></div>
+  <div id="message" class="glowing"><b>יברך אותך מאזאל טובּים</b></div>
   <div id="social-links">
+    <a id="about-link" class="social-link">👤</a>
     <a href="https://cash.app/$northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">💸</a>
     <a href="https://github.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">🧑🏼‍💻</a>
     <a href="https://twitter.com/northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">🐦</a>
-    <a href="https://www.youtube.com/@northbridgewon" class="social-link" target="_blank" rel="noopener noreferrer">📺</a>
     <a href="mailto:cortex@hatov.enterprises" class="social-link" target="_blank" rel="noopener noreferrer">📨</a>
   </div>
 </div>
+
+<div id="about-modal">
+  <div id="modal-content">
+    <span id="close-modal">&times;</span>
+    <h2>About Me</h2>
+    <p>
+      Texas-based Computer Engineer and Systems Architect with a profound passion for pioneering innovative solutions and cutting-edge technology. 
+      My focus is on designing and actualizing the robust, scalable, and revolutionary systems that will define tomorrow.
+    </p>
+  </div>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -115,148 +187,142 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageElement = document.getElementById('message');
   
   const messages = [
-    "Shouldn't you be architecting something truly amazing right now?",
+    "Shouldn't you be architecting something amazing right now?",
     "Procrastinating again, future innovator? My scripts see all.",
-    "Is this the 'extensive research' phase of your current project?",
-    "My lines of code are probably working harder than you are.",
-    "Don't worry, your secret browsing session is safe with me... mostly.",
-    "Compiling genius definitely takes breaks too, I suppose. Keep scrolling.",
-    "Are you meticulously analyzing my source code instead of writing yours?",
-    "You realize that revolutionary new idea won't just code itself, right?",
-    "Are you admiring my dazzling particles or just avoiding those pressing tasks?",
-    "Keep scrolling like that, maybe the meaning of life is the next message.",
-    "I'm merely a website, but even I understand the concept of deadlines.",
-    "¿Sigues aquí vagueando? Tu código no se va a escribir solo, ¿sabes?",
-    "This digital realm is quite captivating, but reality eagerly awaits your brilliance.",
-    "I'm totally judging your browsing speed right now. Kidding... or am I?",
-    "You *could* be debugging that pesky issue, but you chose this. Fascinating choice.",
-    "You know, even the best engineers take breaks... but this is getting ridiculous.",
-    "I see you scrolling, but is your code compiling? Just kidding, I know it isn't.",
-    "I know you have a project somewhere waiting for your genius touch.",
-    "Waiting for inspiration? Maybe it is hiding in your code editor."
-
+    "Is this the 'extensive research' phase of your project?",
+    "My lines of code are working harder than you are.",
+    "Your secret browsing session is safe with me... mostly.",
+    "Compiling genius takes breaks too, I suppose. Keep scrolling.",
+    "Are you meticulously analyzing my source code again?",
+    "You realize that idea won't just code itself, right?",
+    "Admiring my dazzling particles or avoiding pressing tasks?",
+    "This digital realm is captivating, but reality awaits your brilliance.",
+    "¿Sigues vagueando? Tu código no se va a escribir solo.",
+    "I'm judging your browsing speed. Kidding... or am I?",
+    "I see you scrolling, but is your code compiling?",
+    "Waiting for inspiration? Try your code editor.",
+    "Your future self will thank you for coding today.",
+    "Remember, every line of code is a step towards your dreams.",
+    "Even the best engineers need a break, but not too long!",
+    "Your next big idea is just a keystroke away.",
+    "The code won't write itself, but I can help you get started.",
+    "Every great system starts with a single line of code.",
+    "Your future innovations are waiting for you to code them.",
+    "Don't let procrastination win. Your code deserves better."
   ];
-  let initialMessageText = messageElement.innerHTML; // Capture initial HTML content (like <b> tags)
-  let currentMessageIndex = -1; // Start at -1 to show initial message first
-  let isInitialMessage = true;
+  const initialMessageHTML = messageElement.innerHTML;
+  let currentMessageIndex = 0;
+  let isTyping = false;
 
-
-  // Function to display a message with animation
-  function showMessage(htmlContent) {
-    messageElement.innerHTML = htmlContent; // Use innerHTML to preserve formatting like <b>
-    
-    messageElement.style.opacity = '0';
-    messageElement.style.transform = 'translateY(30px)';
-    messageElement.classList.remove('glowing');
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => { 
-        messageElement.style.opacity = '1';
-        messageElement.style.transform = 'translateY(0)';
-        messageElement.classList.add('glowing');
-      });
-    });
+  // --- Typewriter Function ---
+  function typewriter(element, text, callback) {
+    let i = 0;
+    isTyping = true;
+    element.innerHTML = "";
+    element.classList.remove('glowing'); // Remove glow while typing
+    const typingInterval = setInterval(() => {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        element.classList.add('glowing'); // Add glow back when done
+        isTyping = false;
+        if(callback) callback();
+      }
+    }, 50); // Typing speed
   }
 
-  // Function to hide the current message with animation
-  function hideMessage(callback) {
-    messageElement.style.opacity = '0';
-    messageElement.style.transform = 'translateY(-30px)'; // Slide up
-    messageElement.classList.remove('glowing');
-    
-    setTimeout(callback, 600); 
+  // --- Message Cycling Logic ---
+  function changeMessage() {
+    if (isTyping) return;
+    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    typewriter(messageElement, messages[currentMessageIndex]);
   }
   
-  // Function to cycle through messages
-  function changeMessage() {
-    hideMessage(() => {
-      if (isInitialMessage) {
-        isInitialMessage = false; 
-        currentMessageIndex = 0;
-      } else {
-        currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-      }
-      showMessage(messages[currentMessageIndex]);
+  // Show initial message, then start cycling
+  setTimeout(() => {
+    typewriter(messageElement, messages[0], () => {
+        setInterval(changeMessage, 5000); // Wait longer between messages
     });
-  }
+  }, 2000); // Initial delay
 
-  // Show the initial message when the page loads
-  showMessage(initialMessageText);
 
-  // Change message at the specified interval
-  setInterval(changeMessage, 3000); // 3 seconds interval
-
-  // --- Three.js Particle Background (existing code) ---
+  // --- Three.js Particle Background ---
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true }); 
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('particles').appendChild(renderer.domElement);
 
   const particlesGeometry = new THREE.BufferGeometry();
-  const particleCount = 1024; 
+  const particleCount = 2048; // Increased particle count
 
-  const positions = new Float32Array(particleCount * 3); 
-  const colors = new Float32Array(particleCount * 3);    
-
-  for (let i = 0; i < particleCount; i++) {
-    const i3 = i * 3;
-    positions[i3] = (Math.random() - 0.5) * 10; 
-    positions[i3 + 1] = (Math.random() - 0.5) * 10;
-    positions[i3 + 2] = (Math.random() - 0.5) * 10;
-    
-    colors[i3] = Math.random();
-    colors[i3 + 1] = Math.random();
-    colors[i3 + 2] = Math.random();
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 15;
   }
-
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
   const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.0512,         
-    vertexColors: true,   
-    blending: THREE.AdditiveBlending, 
-    transparent: true,    
-    opacity: 0.8          
+    size: 0.02,
+    color: new THREE.Color("cyan"),
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    opacity: 0.7,
+    sizeAttenuation: true
   });
-
   const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
+  camera.position.z = 5;
 
-  camera.position.z = 5; 
+  // --- Mouse Interaction for Particles ---
+  const mouse = new THREE.Vector2();
+  window.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  });
 
   function animateParticles() {
     requestAnimationFrame(animateParticles);
+    const time = Date.now() * 0.0005;
 
-    particlesMesh.rotation.x += 0.0005;
-    particlesMesh.rotation.y += 0.0007;
+    // Pulsating effect
+    particlesMaterial.size = 0.02 + Math.sin(time * 0.5) * 0.005;
+    particlesMaterial.opacity = 0.7 + Math.sin(time * 0.7) * 0.1;
 
-    const time = Date.now() * 0.0005; 
-
-    // const currentPositions = particlesGeometry.attributes.position.array;
-    // for (let i = 0; i < particleCount; i++) {
-    //   const i3 = i * 3;
-    // }ammountammount
-    // particlesGeometry.attributes.position.needsUpdate = true;
-    
-    // const currentColors = particlesGeometry.attributes.color.array;
-    // for (let i = 0; i < particleCount; i++) {
-    //     const i3 = i * 3;
-    //     currentColors[i3] = (Math.sin(time * 0.5 + i * 0.3) + 1) / 2; 
-    //     currentColors[i3+1] = (Math.sin(time * 0.3 + i * 0.5) + 1) / 2; 
-    // }
-    // particlesGeometry.attributes.color.needsUpdate = true;
+    // Mouse follow effect
+    particlesMesh.rotation.y += (mouse.x * 0.2 - particlesMesh.rotation.y) * 0.02;
+    particlesMesh.rotation.x += (mouse.y * 0.2 - particlesMesh.rotation.x) * 0.02;
 
     renderer.render(scene, camera);
   }
-
-  animateParticles(); 
+  animateParticles();
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // --- Modal Logic ---
+  const aboutModal = document.getElementById('about-modal');
+  const aboutLink = document.getElementById('about-link');
+  const closeModal = document.getElementById('close-modal');
+
+  aboutLink.addEventListener('click', () => {
+    aboutModal.classList.add('visible');
+  });
+
+  closeModal.addEventListener('click', () => {
+    aboutModal.classList.remove('visible');
+  });
+
+  // Close modal by clicking on the background
+  aboutModal.addEventListener('click', (event) => {
+    if (event.target === aboutModal) {
+      aboutModal.classList.remove('visible');
+    }
   });
 });
 </script>
