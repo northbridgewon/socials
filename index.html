@@ -331,7 +331,7 @@
     // --- Dynamic System Status ---
     const systemStatusElement = document.getElementById('system-status-text');
     function updateSystemStatus() {
-        const statuses = ["NOMINAL", "ALL SYSTEMS GREEN", "UPLINK ESTABLISHED", "AWAITING INPUT...", "ENCRYPTION ACTIVE", "MATRIX SYNCED"];
+        const statuses = ["VIBIN'", "ALL SYSTEMS GREEN", "UPLINK ESTABLISHED", "AWAITING INPUT...", "ENCRYPTION ACTIVE", "MATRIX SYNCED"];
         const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
         const randomHex = `0x${Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase()}`;
         systemStatusElement.textContent = `STATUS: ${newStatus} | CONN: ${randomHex}`;
